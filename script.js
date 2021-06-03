@@ -5,26 +5,46 @@ let isNumber = function (n) {
 };
 
 const getNum = function () {
-    const randNum = Math.round(Math.random() * 100);
+    const randNum = 10; /* Math.round(Math.random() * 100);*/
     let userNum = prompt('Угадай число от 0 до 100');
-
-    const guessNum = function () {
-        if (+userNum === randNum) {
-            return alert('Поздравляю Вы угадали!');
-        } else if (userNum === null) {
+    let attemptNum = 10;
+     
+  
+        if (attemptNum > 0) {
+                    
+        if (userNum === null) {
             return alert('Игра окончена');
-        } else if (!isNumber(userNum)) {
-            userNum = prompt('Ведите число!');
-            return guessNum();
-        } else if (randNum > userNum) {
-            userNum = prompt('Загаданное число больше, введите новый вариант');
-            return guessNum();
-        } else if (randNum < userNum) {
-            userNum = prompt('Загаданное число меньше, введите новый вариант');
-            return guessNum();
+        } else if (+userNum === randNum) {
+            confirm('Поздравляю, Вы угадали!!! Хотели бы сыграть еще?');
+            if (true) {
+                return getNum();
+            } else {
+                return alert('Игра окончена');
+            }
+        } else {
+            const guessNum = function () {
+                if (!isNumber(userNum)) {
+                    userNum = prompt('Ведите число!');
+                    return guessNum();
+                } else if (randNum > userNum) {
+                    userNum = prompt(`Загаданное число больше, осталось ${attemptNum--} попыток `);
+                    return guessNum();
+                } else if (randNum < userNum) {
+                    userNum = prompt(`Загаданное число меньше, осталось ${attemptNum--} попыток `);
+                    return guessNum();
+                } 
+            };
+            guessNum();
         }
 
-    };
-    guessNum();
+        } else {
+            confirm ('Попытки закончились, хотите сыграть еще?');
+            if (true) {
+                return getNum();
+            } else {
+                alert ('Игра окончена');
+            }
+        }
+  
 };
 getNum();
